@@ -72,7 +72,27 @@ public class MSPanel extends JPanel implements ActionListener {
         return mineNum;
     }
 
+    //Adds numbers to the positions around mines
+    public void determineMines(){
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < columns; j++){
+                int mineCount = 0;
+                try{
+                    if(mines[i-1][j-1] == 9){
+                        mineCount++;
+                    }
+                    if(mines[i-1][j] == 9){
+                        mineCount++;
+                    }
+                    if(mines[i-1][j+1] == 9){
+                        mineCount++;
+                    }
+                }catch(ArrayIndexOutOfBoundsException e){
 
+                }
+            }
+        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
