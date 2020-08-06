@@ -10,16 +10,18 @@ public class MSPanel extends JPanel implements ActionListener {
 
     final int rows = 20;
     final int columns = 20;
-    final int mineCount = 10;
+    final int mineCount = 20;
     JButton spaces[][] = new JButton[rows][columns];
     int mines[][] = new int[rows][columns];
+    JPanel grid = new JPanel();
+    JLabel minesLabel = new JLabel();
+
 
     public MSPanel(){
         this.setLayout(new GridLayout(rows,columns));
         //spaces.addActionListener(this::actionPerformed);
         JButton but = new JButton();
         //but.addActionListener(this::actionPerformed);
-
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < columns; j++){
                 spaces[i][j] = new JButton("");
@@ -36,6 +38,8 @@ public class MSPanel extends JPanel implements ActionListener {
                 System.out.println(mines[i][j]);
             }
         }
+
+        this.add(grid);
         //Random rand = new Random();
         //System.out.println((int) ((rows * columns) * (rand.nextDouble())) + 1);
     }
@@ -87,36 +91,47 @@ public class MSPanel extends JPanel implements ActionListener {
                 if(mines[i][j] == 9){
 
                 }else {
-                    try {
+                    if(i > 0 && j > 0) {
                         if (mines[i - 1][j - 1] == 9) {
                             mineCount++;
                         }
-                        //System.out.println("Yote");
+                    }
+                    if(i > 0) {
                         if (mines[i - 1][j] == 9) {
                             mineCount++;
                         }
+                    }
+                    if(i > 0 && j < columns-1) {
                         if (mines[i - 1][j + 1] == 9) {
                             mineCount++;
                         }
+                    }
+                    if(j > 0) {
                         if (mines[i][j - 1] == 9) {
                             mineCount++;
                         }
+                    }
+                    if(j < columns-1) {
                         if (mines[i][j + 1] == 9) {
                             mineCount++;
                         }
+                    }
+                    if(i < rows-1 && j > 0) {
                         if (mines[i + 1][j - 1] == 9) {
                             mineCount++;
                         }
+                    }
+                    if(i < rows-1) {
                         if (mines[i + 1][j] == 9) {
                             mineCount++;
                         }
+                    }
+                    if(i < rows-1 && j < columns-1) {
                         if (mines[i + 1][j + 1] == 9) {
                             mineCount++;
                         }
-                        mines[i][j] = mineCount;
-                    } catch (ArrayIndexOutOfBoundsException e) {
-
                     }
+                        mines[i][j] = mineCount;
                 }
             }
         }
@@ -127,12 +142,13 @@ public class MSPanel extends JPanel implements ActionListener {
         for(int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 //System.out.printf("Button pressed");
-                if (actionEvent.getSource() == spaces[i][j]) {
+                //if (actionEvent.getSource() == spaces[i][j]) {
                     System.out.println(mines[i][j]);
                     int num = mines[i][j];
                     String number = String.valueOf(num);
                     spaces[i][j].setText(number);
-                }
+
+               // }
             }
         }
     }

@@ -7,7 +7,7 @@ public class Main {
         JFrame frame = new JFrame("Minesweeper");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(new MSPanel());
-        frame.setSize(600,600);
+        frame.setSize(1200,1200);
 
         frame.setVisible(true);
 
