@@ -10,7 +10,7 @@ public class MSPanel extends JPanel implements ActionListener {
 
     final int rows = 20;
     final int columns = 20;
-    final int mineCount = 20;
+    final int mineCount = 70;
     JButton spaces[][] = new JButton[rows][columns];
     int mines[][] = new int[rows][columns];
     JPanel grid = new JPanel();
@@ -22,7 +22,7 @@ public class MSPanel extends JPanel implements ActionListener {
         //spaces.addActionListener(this::actionPerformed);
         JButton but = new JButton();
         //but.addActionListener(this::actionPerformed);
-        for(int i = 0; i < rows; i++){
+        for(int i = 0; i < rows-1; i++){
             for(int j = 0; j < columns; j++){
                 spaces[i][j] = new JButton("");
                 spaces[i][j].addActionListener(this::actionPerformed);
@@ -35,7 +35,7 @@ public class MSPanel extends JPanel implements ActionListener {
 
         for(int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                System.out.println(mines[i][j]);
+                //System.out.println(mines[i][j]);
             }
         }
 
@@ -52,7 +52,7 @@ public class MSPanel extends JPanel implements ActionListener {
                 for(int g = 0; g < mineNum.length; g++){
                     if(pos == mineNum[g]){
                         mines[i][j] = 9;
-                        System.out.println(pos + "/" + i + "/" + j);
+                        //System.out.println(pos + "/" + i + "/" + j);
                     }
                 }
                 pos++;
@@ -142,15 +142,108 @@ public class MSPanel extends JPanel implements ActionListener {
         for(int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 //System.out.printf("Button pressed");
-                //if (actionEvent.getSource() == spaces[i][j]) {
-                    System.out.println(mines[i][j]);
+                if (actionEvent.getSource() == spaces[i][j]) {
+                    //System.out.println(mines[i][j]);
                     int num = mines[i][j];
                     String number = String.valueOf(num);
                     spaces[i][j].setText(number);
-
-               // }
+                    spaces[i][j].setBackground(Color.white);
+                    whiteSpace(i, j);
+                    //clicked(i,j);
+                }
             }
         }
     }
+/*
+    public void clicked(int i, int j){
+        if(mines[i][j] == 0){
+            whiteSpace();
+        }
+    }
+*/
+    public void whiteSpace(int i, int j) {
+        String number;
+        if (mines[i][j] == 9) {
 
+        } else {
+            if(mines[i][j] == 0) {
+                if (i > 0 && j > 0) {
+                    if (mines[i - 1][j - 1] != 0) {
+                        number = String.valueOf(mines[i-1][j-1]);
+                        spaces[i - 1][j - 1].setText(number);
+                        spaces[i-1][j-1].setBackground(Color.white);
+                    }else{
+                        spaces[i-1][j-1].setText(String.valueOf(0));
+                        spaces[i-1][j-1].setBackground(Color.white);
+                        whiteSpace(i-1, j-1);
+                    }
+                }
+                if (i > 0) {
+                    if (mines[i - 1][j] != 0) {
+                        number = String.valueOf(mines[i-1][j]);
+                        spaces[i-1][j].setText(number);
+                        spaces[i-1][j].setBackground(Color.white);
+                    } else{
+                        spaces[i-1][j].setText(String.valueOf(0));
+                        spaces[i-1][j].setBackground(Color.white);
+                        whiteSpace(i-1, j);
+                    }
+                }
+                if (i > 0 && j < columns - 1) {
+                    if (mines[i - 1][j + 1] != 0) {
+                        number = String.valueOf(mines[i-1][j+1]);
+                        spaces[i-1][j+1].setText(number);
+                        spaces[i-1][j+1].setBackground(Color.white);
+                    }else{
+                        spaces[i-1][j+1].setText(String.valueOf(0));
+                        spaces[i-1][j+1].setBackground(Color.white);
+                        whiteSpace(i-1,j+1);
+                    }
+                }
+                if (j > 0) {
+                    if (mines[i][j - 1] != 0) {
+                        number = String.valueOf(mines[i][j-1]);
+                        spaces[i][j-1].setText(number);
+                        spaces[i][j-1].setBackground(Color.white);
+                    }else{
+                        spaces[i][j-1].setText(String.valueOf(0));
+                        spaces[i][j-1].setBackground(Color.white);
+                        whiteSpace(i, j-1);
+                    }
+                }
+                if (j < columns - 1) {
+                    if (mines[i][j + 1] != 0) {
+                        number = String.valueOf(mines[i][j + 1]);
+                        spaces[i][j + 1].setText(number);
+                        spaces[i][j + 1].setBackground(Color.white);
+                    } else {
+                        spaces[i][j + 1].setText(String.valueOf(0));
+                        spaces[i][j + 1].setBackground(Color.white);
+                        whiteSpace(i, j + 1);
+                    }
+                }
+                if (i < rows - 1 && j > 0) {
+                    if (mines[i + 1][j - 1] != 0) {
+                        number = String.valueOf(mines[i+1][j-1]);
+                        spaces[i+1][j-1].setText(number);
+                        spaces[i+1][j-1].setBackground(Color.white);
+                    }else{
+                        spaces[i+1][j-1].setText(String.valueOf(0));
+                        spaces[i+1][j-1].setBackground(Color.white);
+                        whiteSpace(i+1, j-1);
+                    }
+                }
+                if (i < rows - 1) {
+                    if (mines[i + 1][j] != 0) {
+
+                    }
+                }
+                if (i < rows - 1 && j < columns - 1) {
+                    if (mines[i + 1][j + 1] == 9) {
+
+                    }
+                }
+            }
+        }
+    }
 }
