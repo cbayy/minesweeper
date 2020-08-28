@@ -10,7 +10,7 @@ public class MSPanel extends JPanel implements ActionListener {
 
     final int rows = 20;
     final int columns = 20;
-    final int mineCount = 70;
+    final int mineCount = 10;
     JButton spaces[][] = new JButton[rows][columns];
     int mines[][] = new int[rows][columns];
     JPanel grid = new JPanel();
@@ -149,18 +149,11 @@ public class MSPanel extends JPanel implements ActionListener {
                     spaces[i][j].setText(number);
                     spaces[i][j].setBackground(Color.white);
                     whiteSpace(i, j);
-                    //clicked(i,j);
                 }
             }
         }
     }
-/*
-    public void clicked(int i, int j){
-        if(mines[i][j] == 0){
-            whiteSpace();
-        }
-    }
-*/
+
     public void whiteSpace(int i, int j) {
         String number;
         if (mines[i][j] == 9) {
@@ -233,14 +226,29 @@ public class MSPanel extends JPanel implements ActionListener {
                         whiteSpace(i+1, j-1);
                     }
                 }
+
                 if (i < rows - 1) {
                     if (mines[i + 1][j] != 0) {
+                        number = String.valueOf(mines[i+1][j]);
+                        spaces[i+1][j].setText(number);
+                        spaces[i+1][j].setBackground(Color.white);
 
+                    }else{
+                        spaces[i+1][j].setText(String.valueOf(0));
+                        spaces[i+1][j].setBackground(Color.white);
+                        whiteSpace(i+1, j);
                     }
                 }
                 if (i < rows - 1 && j < columns - 1) {
-                    if (mines[i + 1][j + 1] == 9) {
+                    if (mines[i + 1][j + 1] != 0) {
+                        number = String.valueOf(mines[i+1][j+1]);
+                        spaces[i+1][j+1].setText(number);
+                        spaces[i+1][j+1].setBackground(Color.white);
 
+                    }else{
+                        spaces[i+1][j+1].setText(String.valueOf(0));
+                        spaces[i+1][j+1].setBackground(Color.white);
+                        whiteSpace(i+1, j+1);
                     }
                 }
             }
