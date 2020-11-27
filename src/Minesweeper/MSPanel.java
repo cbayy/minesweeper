@@ -155,109 +155,29 @@ public class MSPanel extends JPanel implements ActionListener {
     }
 
     public void whiteSpace(int i, int j) {
-        String number;
         if (mines[i][j] == 9) {
             return;
         } else {
             if(mines[i][j] == 0) {
-                if (i > 0 && j > 0) {
-                    if (mines[i - 1][j - 1] != 0) {
-                        number = String.valueOf(mines[i-1][j-1]);
-                        spaces[i - 1][j - 1].setText(number);
-                        spaces[i-1][j-1].setBackground(Color.white);
-                        return;
-                    }else{
-                        spaces[i-1][j-1].setText(String.valueOf(0));
-                        spaces[i-1][j-1].setBackground(Color.white);
-                        whiteSpace(i-1, j-1);
-                    }
-                }
-                if (i > 0) {
-                    if (mines[i - 1][j] != 0) {
-                        number = String.valueOf(mines[i-1][j]);
-                        spaces[i-1][j].setText(number);
-                        spaces[i-1][j].setBackground(Color.white);
-                        return;
-                    } else{
-                        spaces[i-1][j].setText(String.valueOf(0));
-                        spaces[i-1][j].setBackground(Color.white);
-                        whiteSpace(i-1, j);
-                    }
-                }
-                if (i > 0 && j < columns - 1) {
-                    if (mines[i - 1][j + 1] != 0) {
-                        number = String.valueOf(mines[i-1][j+1]);
-                        spaces[i-1][j+1].setText(number);
-                        spaces[i-1][j+1].setBackground(Color.white);
-                        return;
-                    }else{
-                        spaces[i-1][j+1].setText(String.valueOf(0));
-                        spaces[i-1][j+1].setBackground(Color.white);
-                        whiteSpace(i-1,j+1);
-                    }
-                }
-                if (j > 0) {
-                    if (mines[i][j - 1] != 0) {
-                        number = String.valueOf(mines[i][j-1]);
-                        spaces[i][j-1].setText(number);
-                        spaces[i][j-1].setBackground(Color.white);
-                        return;
-                    }else{
-                        spaces[i][j-1].setText(String.valueOf(0));
-                        spaces[i][j-1].setBackground(Color.white);
-                        whiteSpace(i, j-1);                    
-                    }
-                }    
-                if (j < columns - 1) {
-                    if (mines[i][j + 1] != 0) {
-                        number = String.valueOf(mines[i][j + 1]);
-                        spaces[i][j + 1].setText(number);
-                        spaces[i][j + 1].setBackground(Color.white);
-                        return;
-                    } else {
-                        spaces[i][j + 1].setText(String.valueOf(0));
-                        spaces[i][j + 1].setBackground(Color.white);
-                        whiteSpace(i, j + 1);
-                    }
-                }
-                if (i < rows - 1 && j > 0) {
-                    if (mines[i + 1][j - 1] != 0) {
-                        number = String.valueOf(mines[i+1][j-1]);
-                        spaces[i+1][j-1].setText(number);
-                        spaces[i+1][j-1].setBackground(Color.white);
-                        return;
-                    }else{
-                        spaces[i+1][j-1].setText(String.valueOf(0));
-                        spaces[i+1][j-1].setBackground(Color.white);
-                        whiteSpace(i+1, j-1);
-                    }
-                }
+                int xMin = Math.max(0, j - 1);
+                int xMax = Math.min(columns, j + 1);
+                int yMin = Math.max(0, i - 1);
+                int yMax = Math.min(rows, i + 1);
 
-                if (i < rows - 1) {
-                    if (mines[i + 1][j] != 0) {
-                        number = String.valueOf(mines[i+1][j]);
-                        spaces[i+1][j].setText(number);
-                        spaces[i+1][j].setBackground(Color.white);
-                        return;
-                    }else{
-                        spaces[i+1][j].setText(String.valueOf(0));
-                        spaces[i+1][j].setBackground(Color.white);
-                        whiteSpace(i+1, j);
+                for (int col = xMin; col < xMax; col++) {
+                    for (int row = yMin; row < yMax; row++) {
+                        if (mines[row][col] == 0) {
+                            spaces[row][col].setText("0");
+                            spaces[row][col].setBackground(Color.WHITE);
+                            whiteSpace(row, col);
+                        } else {
+                            String number = String.valueOf(mines[row][col]);
+                            spaces[row][col].setText(number);
+                            spaces[row][col].setBackground(Color.WHITE);
+                        }
                     }
                 }
-                if (i < rows - 1 && j < columns - 1) {
-                    if (mines[i + 1][j + 1] != 0) {
-                        number = String.valueOf(mines[i+1][j+1]);
-                        spaces[i+1][j+1].setText(number);
-                        spaces[i+1][j+1].setBackground(Color.white);
-                        return;
-                    }else{
-                        spaces[i+1][j+1].setText(String.valueOf(0));
-                        spaces[i+1][j+1].setBackground(Color.white);
-                        whiteSpace(i+1, j+1);
-                    }
-                }
-            }    
+            }
         }
     }
 }
