@@ -13,14 +13,12 @@ public class MSPanel extends JPanel implements ActionListener {
     final int mineCount = 50;
     JButton spaces[][] = new JButton[rows][columns];
     int mines[][] = new int[rows][columns];
-    JPanel grid = new JPanel();
     JLabel minesLabel = new JLabel();
 
 
     public MSPanel(){
         this.setLayout(new GridLayout(rows,columns));
-        JButton but = new JButton();
-        for(int i = 0; i < rows-1; i++){
+        for(int i = 0; i < rows; i++){
             for(int j = 0; j < columns; j++){
                 spaces[i][j] = new JButton("");
                 spaces[i][j].addActionListener(this::actionPerformed);
@@ -30,7 +28,6 @@ public class MSPanel extends JPanel implements ActionListener {
         }
         placeMines();
         determineMines();
-        this.add(grid);
     }
 
     public void placeMines(){
@@ -128,38 +125,42 @@ public class MSPanel extends JPanel implements ActionListener {
         for(int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (actionEvent.getSource() == spaces[i][j]) {
-                    int num = mines[i][j];
-                    String number = String.valueOf(num);
-                    spaces[i][j].setText(number);
-                    spaces[i][j].setBackground(Color.white);
-                    whiteSpace(i, j);
+                    revealTile(i, j);
                 }
             }
         }
     }
 
-    public void whiteSpace(int i, int j) {
-        if (mines[i][j] == 9) {
-            return;
-        } else {
-            if(mines[i][j] == 0) {
-                int xMin = Math.max(0, j - 1);
-                int xMax = Math.min(columns, j + 1);
-                int yMin = Math.max(0, i - 1);
-                int yMax = Math.min(rows, i + 1);
+    public void revealTile(int i, int j) {
+        String number = String.valueOf(mines[i][j]);
+        spaces[i][j].setText(number);
+        spaces[i][j].setBackground(Color.WHITE);
 
-                for (int col = xMin; col < xMax; col++) {
-                    for (int row = yMin; row < yMax; row++) {
-                        if (mines[row][col] == 0) {
-                            spaces[row][col].setText("0");
-                            spaces[row][col].setBackground(Color.WHITE);
-                            whiteSpace(row, col);
-                        } else {
-                            String number = String.valueOf(mines[row][col]);
-                            spaces[row][col].setText(number);
-                            spaces[row][col].setBackground(Color.WHITE);
-                        }
-                    }
+        if (mines[i][j] == 0) {
+            revealNeighbours(i, j);
+        }
+    }
+
+    public void revealNeighbours(int i, int j) {
+        int xMin = Math.max(0, j - 1);
+        int xMax = Math.min(columns - 1, j + 1);
+        int yMin = Math.max(0, i - 1);
+        int yMax = Math.min(rows - 1, i + 1);
+
+        for (int col = xMin; col <= xMax; col++) {
+            for (int row = yMin; row <= yMax; row++) {
+                // TODO:
+                // Have a system for checking if a tile is revealed.
+                // Currently, it is checked by testing to see if the button is blank (unrevealed)
+                // My recommendation:
+                // Separate the logic of the game into a new class, "GameState" for example.
+                // In this class, have your LOGIC fields (everything that's not buttons, JPanels, etc.)
+                // and when an action is performed on this JPanel, communicate that to the logic class.
+                // For displaying to the screen, have this class query the GameLogic instance.
+                // That way, the game doesn't care that the rendering implementation uses swing or buttons, and
+                // could be replaced with JavaFX with no issues
+                if (!(col == j && row == i) && spaces[row][col].getText().isBlank()) {
+                    revealTile(row, col);
                 }
             }
         }
