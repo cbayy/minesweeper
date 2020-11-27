@@ -19,9 +19,7 @@ public class MSPanel extends JPanel implements ActionListener {
 
     public MSPanel(){
         this.setLayout(new GridLayout(rows,columns));
-        //spaces.addActionListener(this::actionPerformed);
         JButton but = new JButton();
-        //but.addActionListener(this::actionPerformed);
         for(int i = 0; i < rows-1; i++){
             for(int j = 0; j < columns; j++){
                 spaces[i][j] = new JButton("");
@@ -32,16 +30,7 @@ public class MSPanel extends JPanel implements ActionListener {
         }
         placeMines();
         determineMines();
-
-        for(int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                //System.out.println(mines[i][j]);
-            }
-        }
-
         this.add(grid);
-        //Random rand = new Random();
-        //System.out.println((int) ((rows * columns) * (rand.nextDouble())) + 1);
     }
 
     public void placeMines(){
@@ -52,7 +41,6 @@ public class MSPanel extends JPanel implements ActionListener {
                 for(int g = 0; g < mineNum.length; g++){
                     if(pos == mineNum[g]){
                         mines[i][j] = 9;
-                        //System.out.println(pos + "/" + i + "/" + j);
                     }
                 }
                 pos++;
@@ -75,10 +63,8 @@ public class MSPanel extends JPanel implements ActionListener {
             }
             if(containsMine == false){
                 mineNum[k] = mine;
-                //System.out.println(mine);
             }
                 k++;
-
         }
         return mineNum;
     }
@@ -141,9 +127,7 @@ public class MSPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         for(int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                //System.out.printf("Button pressed");
                 if (actionEvent.getSource() == spaces[i][j]) {
-                    //System.out.println(mines[i][j]);
                     int num = mines[i][j];
                     String number = String.valueOf(num);
                     spaces[i][j].setText(number);
