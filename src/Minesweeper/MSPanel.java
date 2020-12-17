@@ -1,8 +1,12 @@
 package Minesweeper;
 
 import javax.swing.*;
+
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
@@ -22,6 +26,22 @@ public class MSPanel extends JPanel implements ActionListener {
             for(int j = 0; j < columns; j++){
                 spaces[i][j] = new JButton("");
                 spaces[i][j].addActionListener(this::actionPerformed);
+
+                int finalJ = j;
+                int finalI = i;
+                spaces[i][j].addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        if(e.getButton() == MouseEvent.BUTTON3) {
+                            if(spaces[finalI][finalJ].getText() == "F"){
+                                spaces[finalI][finalJ].setText("");
+                            }else{
+                                spaces[finalI][finalJ].setText("F");
+                            }
+
+                        }
+                    }
+                });
                 this.add(spaces[i][j]);
                 mines[i][j] = 0;
             }
@@ -130,6 +150,13 @@ public class MSPanel extends JPanel implements ActionListener {
             }
         }
     }
+
+    public void mousePressed(MouseEvent e) {
+        if (e.getButton() == MouseEvent.BUTTON3) {
+            System.out.println("Right Button Pressed");
+        }
+    }
+
 
     public void revealTile(int i, int j) {
         String number = String.valueOf(mines[i][j]);
