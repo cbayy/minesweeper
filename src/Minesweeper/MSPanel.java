@@ -27,18 +27,17 @@ public class MSPanel extends JPanel implements ActionListener {
                 spaces[i][j] = new JButton("");
                 spaces[i][j].addActionListener(this::actionPerformed);
 
-                int finalJ = j;
-                int finalI = i;
+                final int fI = i;
+                final int fJ = j;
                 spaces[i][j].addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        if(e.getButton() == MouseEvent.BUTTON3) {
-                            if(spaces[finalI][finalJ].getText() == "F"){
-                                spaces[finalI][finalJ].setText("");
-                            }else{
-                                spaces[finalI][finalJ].setText("F");
+                        if (e.getButton() == MouseEvent.BUTTON3) {
+                            if (spaces[fI][fJ].getText().equals("F")) {
+                                spaces[fI][fJ].setText("");
+                            } else {
+                                spaces[fI][fJ].setText("F");
                             }
-
                         }
                     }
                 });
@@ -151,15 +150,9 @@ public class MSPanel extends JPanel implements ActionListener {
         }
     }
 
-    public void mousePressed(MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON3) {
-            System.out.println("Right Button Pressed");
-        }
-    }
-
-
     public void revealTile(int i, int j) {
         String number = String.valueOf(mines[i][j]);
+
         spaces[i][j].setText(number);
         spaces[i][j].setBackground(Color.WHITE);
 
