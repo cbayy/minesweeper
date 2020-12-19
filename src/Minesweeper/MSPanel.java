@@ -82,13 +82,11 @@ public class MSPanel extends JPanel implements ActionListener {
             containsMine = isOccupied(mineNum, mine);
             if(containsMine == false){
                 mineNum[k] = mine;
-                System.out.println("Not replaced");
             }
             if(containsMine == true){
                 while(containsMine == true){
                     mine = randomMine(rows, columns);
                     containsMine = isOccupied(mineNum, mine);
-                    System.out.println("REPLACED MINE");
                 }
 
             }
@@ -185,6 +183,12 @@ public class MSPanel extends JPanel implements ActionListener {
 
         if (mines[i][j] == 0) {
             revealNeighbours(i, j);
+        }
+        //Eventually separate swing component from logic to separate class
+        if(mines[i][j] == 9){
+            JOptionPane.showMessageDialog(this,
+                    "Mine triggered: Game lost.");
+                    Main.createNewFrame((JFrame) SwingUtilities.getWindowAncestor(this));
         }
     }
 
