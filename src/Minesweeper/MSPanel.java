@@ -15,38 +15,46 @@ public class MSPanel extends JPanel implements ActionListener {
     final int rows = 20;
     final int columns = 20;
     final int mineCount = 50;
+    int remainingMines = mineCount;
     JButton spaces[][] = new JButton[rows][columns];
     int mines[][] = new int[rows][columns];
-    JLabel minesLabel = new JLabel();
+    JLabel minesLabel = new JLabel("Mines: " + remainingMines);
 
 
     public MSPanel(){
-        this.setLayout(new GridLayout(rows,columns));
+        this.setLayout(new BorderLayout());
+        this.add(minesLabel,  BorderLayout.NORTH);
+        JPanel grid = new JPanel();
+        grid.setLayout(new GridLayout(rows,columns));
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < columns; j++){
                 spaces[i][j] = new JButton("");
                 spaces[i][j].addActionListener(this::actionPerformed);
-
                 final int fI = i;
                 final int fJ = j;
                 spaces[i][j].addMouseListener(new MouseAdapter() {
                     @Override
-                    public void mouseClicked(MouseEvent e) {
+                    public void mouseReleased(MouseEvent e) {
                         if (e.getButton() == MouseEvent.BUTTON3) {
                             if (spaces[fI][fJ].getText().equals("F")) {
                                 spaces[fI][fJ].setText("");
+                                remainingMines++;
+                                minesLabel.setText("Mines: " + remainingMines);
                             } else {
                                 spaces[fI][fJ].setText("F");
+                                remainingMines--;
+                                minesLabel.setText("Mines: " + remainingMines);
                             }
                         }
                     }
                 });
-                this.add(spaces[i][j]);
+                grid.add(spaces[i][j]);
                 mines[i][j] = 0;
             }
         }
         placeMines();
         determineMines();
+        this.add(grid, BorderLayout.CENTER);
     }
 
     public void placeMines(){
