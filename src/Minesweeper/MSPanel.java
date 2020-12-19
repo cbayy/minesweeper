@@ -40,7 +40,9 @@ public class MSPanel extends JPanel implements ActionListener {
                                 spaces[fI][fJ].setText("");
                                 remainingMines++;
                                 minesLabel.setText("Mines: " + remainingMines);
-                            } else {
+                            } else if(spaces[fI][fJ].getBackground() == Color.WHITE) {
+                            }else{
+                                System.out.println(spaces[fI][fJ].getBackground());
                                 spaces[fI][fJ].setText("F");
                                 remainingMines--;
                                 minesLabel.setText("Mines: " + remainingMines);
