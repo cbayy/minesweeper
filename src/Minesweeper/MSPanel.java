@@ -78,19 +78,38 @@ public class MSPanel extends JPanel implements ActionListener {
         int k = 0;
         while(k < mineCount){
             containsMine = false;
-            Random random = new Random();
-            int mine = (int)(random.nextDouble() * (rows * columns))+1;
-            for(int i = 0; i < mineNum.length; i++) {
-                if (mine == mineNum[i]) {
-                    containsMine = true;
-                }
-            }
+            int mine = randomMine(rows, columns);
+            containsMine = isOccupied(mineNum, mine);
             if(containsMine == false){
                 mineNum[k] = mine;
+                System.out.println("Not replaced");
+            }
+            if(containsMine == true){
+                while(containsMine == true){
+                    mine = randomMine(rows, columns);
+                    containsMine = isOccupied(mineNum, mine);
+                    System.out.println("REPLACED MINE");
+                }
+
             }
                 k++;
         }
         return mineNum;
+    }
+
+    public int randomMine(int row, int columns){
+        Random random = new Random();
+        int mine;
+        return mine = (int)(random.nextDouble() * (rows * columns))+1;
+    }
+
+    public boolean isOccupied(int mineNum[], int mine) {
+        for (int i = 0; i < mineNum.length; i++) {
+            if (mine == mineNum[i]) {
+                return true;
+            }
+        }
+        return false;
     }
 
     //Adds numbers to the positions around mines
