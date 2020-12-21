@@ -12,9 +12,9 @@ import java.util.Random;
 
 public class MSPanel extends JPanel implements ActionListener {
 
-    final int rows = 20;
-    final int columns = 20;
-    final int mineCount = 50;
+    final int rows = 7;
+    final int columns = 7;
+    final int mineCount = 1;
     int remainingMines = mineCount;
     JButton spaces[][] = new JButton[rows][columns];
     int mines[][] = new int[rows][columns];
@@ -41,11 +41,15 @@ public class MSPanel extends JPanel implements ActionListener {
                                 remainingMines++;
                                 minesLabel.setText("Mines: " + remainingMines);
                             } else if(spaces[fI][fJ].getBackground() == Color.WHITE) {
-                            }else{
-                                System.out.println(spaces[fI][fJ].getBackground());
-                                spaces[fI][fJ].setText("F");
-                                remainingMines--;
-                                minesLabel.setText("Mines: " + remainingMines);
+                            }else {
+                                if (remainingMines != 0) {
+                                    spaces[fI][fJ].setText("F");
+                                    remainingMines--;
+                                    minesLabel.setText("Mines: " + remainingMines);
+                                    if(remainingMines == 0){
+                                        gameComplete();
+                                    }
+                                }
                             }
                         }
                     }
@@ -110,6 +114,23 @@ public class MSPanel extends JPanel implements ActionListener {
             }
         }
         return false;
+    }
+
+    public void gameComplete(){
+        int correctMines = 0;
+        for(int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if(spaces[i][j].getText().equals("F") && mines[i][j] == 9){
+                    correctMines++;
+                }
+            }
+        }
+        if(correctMines == mineCount){
+            JOptionPane.showMessageDialog(this,
+                    "All mines found: Game won");
+            Main.createNewFrame((JFrame) SwingUtilities.getWindowAncestor(this));
+
+        }
     }
 
     //Adds numbers to the positions around mines
