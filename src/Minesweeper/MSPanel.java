@@ -14,7 +14,7 @@ public class MSPanel extends JPanel implements ActionListener {
 
     final int rows = 7;
     final int columns = 7;
-    final int mineCount = 1;
+    final int mineCount = 5;
     int remainingMines = mineCount;
     JButton spaces[][] = new JButton[rows][columns];
     int mines[][] = new int[rows][columns];
@@ -29,6 +29,7 @@ public class MSPanel extends JPanel implements ActionListener {
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < columns; j++){
                 spaces[i][j] = new JButton("");
+                spaces[i][j].setBackground(Color.lightGray);
                 spaces[i][j].addActionListener(this::actionPerformed);
                 final int fI = i;
                 final int fJ = j;
@@ -202,7 +203,7 @@ public class MSPanel extends JPanel implements ActionListener {
         String number = String.valueOf(mines[i][j]);
 
         spaces[i][j].setText(number);
-        spaces[i][j].setBackground(Color.WHITE);
+        spaces[i][j].setBackground(Color.gray);
 
         if (mines[i][j] == 0) {
             revealNeighbours(i, j);
